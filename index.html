@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Some JavaScript Practice</title>
+        <link type = "text/css" rel = "stylesheet" href="stylesheet.css" />
+
+    </head>
+    <body>
+        <div class = "header">
+            <div class = "container">
+                <a href = "#" class = "logo-icon">
+                    <div> </div>
+                </a>
+                <ul class ="menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href = "#">About</a></li>
+                    <li><a href = "#">Games</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class = "gamesList">
+            <ul>
+                <button type="button"  onclick="battleshipGame()">Play Battleship!</button>
+                <button type="button"  onclick="childCareGame()">Play Childcare!</button>
+            </ul>
+        </div>
+        <div class = "centerContent">
+            <p id = "gameOutput"></p>
+        </div>
+        <div id="battleshipButton">
+            <p onclick="battleshipGame()">Let's play a game</p>
+        </div>
+        <script src="javascript.js"></script>
+    </body>
+</html>
