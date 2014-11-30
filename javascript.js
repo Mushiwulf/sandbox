@@ -1,3 +1,5 @@
+
+
 function fullBattleshipGame() {
     var view = {
         displayMessage: function(msg) {
@@ -19,11 +21,11 @@ function fullBattleshipGame() {
         shipLength: 3,
         shipsSunk: 0,
         
-	ships: [
-		{ locations: ["06", "16", "26"], hits: ["", "", ""] },
-		{ locations: ["24", "34", "44"], hits: ["", "", ""] },
-		{ locations: ["10", "11", "12"], hits: ["", "", ""] }
-	],
+    	ships: [
+	    	{ locations: ["06", "16", "26"], hits: ["", "", ""] },
+	    	{ locations: ["24", "34", "44"], hits: ["", "", ""] },
+	    	{ locations: ["10", "11", "12"], hits: ["", "", ""] }
+    	],
         
         fire: function(guess) {
             for(var i = 0; i < this.numShips; i++) {
@@ -39,7 +41,6 @@ function fullBattleshipGame() {
                     }
                     return true;
                 }
-
             }
             view.displayMiss(guess);
             view.displayMessage("You missed.");
@@ -56,11 +57,59 @@ function fullBattleshipGame() {
         }
     };
     
+    var controller = {
+      guesses: 0,
+      processGuess: function(guess) {
+          var location = parseGuess(guess);
+          if (location) {
+              this.guesses++;
+              var hit = model.fire(location);
+              if (hit && model.shipsSunk === model.numShips) {
+                  view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses");
+              }
+          }
+      }
+    };
+    function parseGuess(guess) {
+        var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
+        if (guess === null || guess.length !== 2) {
+            alert("Please enter a valid guess.")
+        } else {
+            var firstChar = guess.charAt(0);
+            var row = alphabet.indexOf(firstChar.toUpperCase());
+            var column = guess.charAt(1);
+            
+            if (isNaN(row) || isNaN(column)) {
+                alert("Oops, out of range.");
+            } else if ( row < 0 || row >= model.boardSize || column < 0 || column >= model.boardSize) {
+                alert("Oops thats off the board!")
+            } else {
+                return row + column;
+            }
+        }
+        return null;
+    }
+    function init() {
+        var fireButton = document.getElementById("fireButton");
+        fireButton.onclick = handleFireButton;
+        var guessInput = document.getElementById("guessInput");
+        guessInput.onkeypress = handleKeyPress;
+    }
+    function handleFireButton () {
+        var guessInput = document.getElementById("guessInput");
+        var guess = guessInput.value;
+        controller.processGuess(guess);
+        guessInput.value = "";
+    }
+    function handleKeyPress (e) {
+        var fireButton = document.getElementById("fireButton");
+        if (e.keyCode === 13) {
+            fireButton.click();
+            return false;
+        }
+    }
     /* test fires */
-    model.fire("24");
-    model.fire("16");
-    model.fire("26");
-
+    init();
 }
 
 

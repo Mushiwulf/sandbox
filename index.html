@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <title>Some JavaScript Practice</title>
         <link type = "text/css" rel = "stylesheet" href="stylesheet.css" />
-
     </head>
     <body>
         <div class = "header">
@@ -21,7 +20,7 @@
         </div>
         <div class = "gamesList">
             <ul>
-                <button type="button"  onclick="fullBattleshipGame()">Play Battleship!</button>
+                <button type="button"  onclick="battleshipGame()">Play Battleship!</button>
                 <button type="button"  onclick="childCareGame()">Play Childcare!</button>
             </ul>
         </div>
@@ -51,8 +50,8 @@
                 </tr>
             </table>
             <form>
-                <input type="text" id="guessInput" placeholder="A0">
-                <input type="button" id="fireButton" vale="Fire!">
+                <input type="text" id="guessInput" placeholder="Click fire to start!">
+                <input type="button" id="fireButton" value="Fire!" onclick="fullBattleshipGame()">
             </form>
             
         </div>
@@ -60,5 +59,6 @@
             <p onclick="battleshipGame()">Let's play a game</p>
         </div>
         <script src="javascript.js"></script>
+        
     </body>
 </html>
