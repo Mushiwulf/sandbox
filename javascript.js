@@ -119,7 +119,7 @@ function fullBattleshipGame() {
     function parseGuess(guess) {
         var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
         if (guess === null || guess.length !== 2) {
-            alert("Please enter a valid guess.")
+            alert("Please enter a valid guess.");
         } else {
             var firstChar = guess.charAt(0);
             var row = alphabet.indexOf(firstChar.toUpperCase());
@@ -128,7 +128,7 @@ function fullBattleshipGame() {
             if (isNaN(row) || isNaN(column)) {
                 alert("Oops, out of range.");
             } else if ( row < 0 || row >= model.boardSize || column < 0 || column >= model.boardSize) {
-                alert("Oops thats off the board!")
+                alert("Oops thats off the board!");
             } else {
                 return row + column;
             }
