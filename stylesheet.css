@@ -57,7 +57,6 @@
     width: 1024px;
     background: url("board.jpg") no-repeat;
     clear: both;
-    position: relative;
     margin: auto;
 }
 
@@ -68,17 +67,47 @@
     color: rgb(83, 175, 19);
 }
 
-table {
-    position: absolute;
+#battleshipTable {
+    position: relative;
     left: 172px;
     top: 98px;
 }
 
-td {
+#battleshipTable td {
     width: 92px;
     height: 92px;
 }
 
+#backgammonTableOne {
+    position: absolute;
+    left: 390px;
+    top: 32px;
+}
+/* #backgammonTableOne td {
+    border: solid 2px blue;
+    width: 41px;
+    height: 41px;
+}*/
+#backgammonTableTwo {
+    position: absolute;
+    left: 32px;
+    top: 32px;
+}
+#backgammonTableThree {
+    position: absolute;
+    left: 32px;
+    top: 364px;
+}
+#backgammonTableFour {
+    position: absolute;
+    left: 390px;
+    top: 364px;
+}
+#backgammonGame td {
+    border: solid 2px blue;
+    width: 41px;
+    height: 41px;
+}
 form {
     position: absolute;
     bottom: 0px;
@@ -116,4 +145,13 @@ button {
 	margin-top: 15px;
 	text-align: center;
 	float: right;
+}
+
+#backgammonGame {
+    position: relative;
+    background: url("backgammonBoard.jpg") no-repeat;
+    height: 641px;
+    width: 720px;
+    clear: both;
+    margin: auto;
 }
