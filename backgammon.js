@@ -48,9 +48,13 @@ function backgammonGame () {
             
         },
         advancePlayer: function() {
-            
+            if (model.playerTurn === "white") {
+                model.playerTurn = "black"
+            } else {
+                model.playerTurn = "white"
+            }
         },
-        getActiveChecker: function() {
+        getActiveChecker: function(loction) {
             /* Take the index of the input and search the column for the last occupied slot*/
         },
         moveChecker: function(player, location, die) {
@@ -71,4 +75,5 @@ function backgammonGame () {
         model.setupBoard();
     }
     init();
+    
 }
