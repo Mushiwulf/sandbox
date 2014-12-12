@@ -20,14 +20,15 @@
         </div>
         <div class = "backgammonControls">
             <button type = "button" onclick = "backgammonGame()">Reset Board</button>
+            <button type = "button" id="rollDiceButton">Roll dice</button>
         </div>
         <div id = "backgammonGame">
             <table id = "backgammonTableOne">
                 <tr>
-                    <td id="T0" class="piece">Test1</td><td id="U0"></td><td id="V0"></td><td id="W0"></td><td id="X0"></td><td id="Y0" class="piece">
+                    <td id="T0">Test1</td><td id="U0"></td><td id="V0"></td><td id="W0"></td><td id="X0"></td><td id="Y0">
                 </tr>
                 <tr>
-                    <td id="T1"></td><td id="U1"></td><td id="V1"></td><td id="W1"></td><td id="X1"></td><td id="Y1" class="piece">
+                    <td id="T1"></td><td id="U1"></td><td id="V1"></td><td id="W1"></td><td id="X1"></td><td id="Y1">
                 </tr>
                 <tr>
                     <td id="T2"></td><td id="U2"></td><td id="V2"></td><td id="W2"></td><td id="X2"></td><td id="Y2">
@@ -101,7 +102,11 @@
                     <td id = "dieBin1"></td><td id = "dieBin2"></td>
                 </tr>
             </table>
-        </div>        
+        </div>
+            <form>
+                <input type="text" id="guessInput" placeholder="Pick a checker to move">
+                <input type="button" id="fireButton" value="Fire!" onclick="">
+            </form>        
         <script src="backgammon.js"></script>
     </body>
 </html>
