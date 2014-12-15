@@ -6,8 +6,8 @@ function backgammonGame () {
         },
         emptyCell: function(index) {
             var cell = document.getElementById(index);
-            if (cell != "null") {
-                cell.setAttribute("class", "null");              
+            if (cell != null) {
+                cell.setAttribute("class", "empty");              
             }
                
         },
@@ -19,16 +19,17 @@ function backgammonGame () {
     };
     var model = {
         playerTurn: "Black",
+        allPositions: ["B0", "B1", "B2", "B3", "B4", "C0", "C1"],
         startLocationsWhite: ["B0", "B1", "M0", "M1", "M2", "M3", "M4", "R0", "R1", "R2", "T0", "T1", "T2", "T3", "T4"],
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
         dice: [0,0],
-        clearBoard: function() {
-            for (var i = 0; i < model.startLocationsWhite.length; i++) {
-                var index = this.startLocationsWhite[i];
+       clearBoard: function() {
+           $('#backgammonGame table tr td').removeClass('.fillBlack').removeClass('.fillWhite').addClass('empty');
+         /*   for (var i = 0; i < model.allPositions.length; i++) {
+                var index = this.allPositions[i];
                 view.emptyCell(index);
-            }
-                        
-        },
+            } */
+        }, 
         setupBoard: function() {
             var index;
             var i;
@@ -59,15 +60,40 @@ function backgammonGame () {
         },
         advancePlayer: function() {
             if (model.playerTurn === "White") {
-                model.playerTurn = "Black"
+                model.playerTurn = "Black";
             } else {
-                model.playerTurn = "White"
+                model.playerTurn = "White";
             }
         },
-        getActiveChecker: function(location) {
-            /* Take the index of the input and search the column for the last occupied slot*/
-
+        getLowestInColumn: function(newColumn) {
+          var columnArray = controller.buildColumnArray(newColumn);
+          var newIndex;
+          var i;
+          for (i=0; i < columnArray.length; i++) {
+              if (columnArray[i] === "empty" || null) {
+                  return newIndex;
+              }
+          }
         },
+        buildColumnArray: function(column) {
+            var columnArray = [];
+            var i;
+            for (i=0; i<5; i++) {
+                columnArray[i] = column + i.toString();
+            }
+            return columnArray;
+        },
+/*        getActiveChecker: function(location, player) {
+            // Take the index of the input and search the column for the last occupied slot
+            
+            var i = 0;
+            do {
+                location = location + i.toSring;
+                location = document.getElementById(location);
+                view.fillCell(location, player);
+                i++;
+            } while (location != null || "empty");
+        }, */
         moveChecker: function(player, location, die) {
             var roll = this.die;
             var direction;
@@ -90,21 +116,28 @@ function backgammonGame () {
                 view.showDice(dice[i], i);
             }
         },
+        getNewColumn: function(column, move) {
+            var newColumn = String.fromCharCode(column.charCodeAt(0) + move);
+            return newColumn;
+        },
         // proof of concept function coming. Remove later
         moveTest: function(column, player) {
             player = model.playerTurn;
             var newDirection;
+            var move;
+            var die = 2;
             if (player === "White") {
                 newDirection = 1;
             } else {
                 newDirection = -1;
             }
-            // newDirection not working properly (actually I think advancePlayer isnt working)
-            var newColumn = String.fromCharCode(column.charCodeAt(0) + newDirection);
-            var newRow = column.charAt(1);
-            var newIndex = newColumn + newRow;
+            move = newDirection * die;
+            var newColumn= controller.getNewColumn(column, move);
+            var newRow =  column.charAt(1);
+            var newIndex =  newColumn + newRow;// controller.getLowestInColumn(newColumn);
             view.emptyCell(column);
             view.fillCell(newIndex, player);
+            // controller.getActiveChecker(newIndex.charAt(0));
             controller.advancePlayer();
             
         }
@@ -137,5 +170,4 @@ function backgammonGame () {
         
     }
     init();
-    
 }

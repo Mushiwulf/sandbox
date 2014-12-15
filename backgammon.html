@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Backgammon on its own page</title>
         <link type ="text/css" rel="stylesheet" href="stylesheet.css" />
+        <script src="jquery-1.11.1.min.js"></script>
     </head>
     <body>
         <div class = "header">
@@ -21,7 +22,6 @@
         <div class = "backgammonControls">
             <button type = "button" onclick = "backgammonGame()">Reset Board</button>
             <button type = "button" id="rollDiceButton">Roll dice</button>
-        </div>
         <div id = "backgammonGame">
             <table id = "backgammonTableOne">
                 <tr>
@@ -76,7 +76,7 @@
             </table> 
             <table id = "backgammonTableFour">
                 <tr>
-                    <td id="G4"></td><td id="F4"></td><td id="E4"></td><td id="D4"></td><td id="C4"></td><td id="B4">
+                    <td id="G4"></td><td id="F4" class = "empty"></td><td id="E4"></td><td id="D4"></td><td id="C4"></td><td id="B4">
                 </tr>
                 <tr>
                     <td id="G3"></td><td id="F3"></td><td id="E3"></td><td id="D3"></td><td id="C3"></td><td id="B3">
@@ -85,10 +85,10 @@
                     <td id="G2"></td><td id="F2"></td><td id="E2"></td><td id="D2"></td><td id="C2"></td><td id="B2">
                 </tr>
                 <tr>
-                    <td id="G1"></td><td id="F1"></td><td id="E1"></td><td id="D1"></td><td id="C1"></td><td id="B1">
+                    <td id="G1"></td><td id="F1"></td><td id="E1"></td><td id="D1"></td><td id="C1" class = "empty"></td><td id="B1">
                 </tr>
                 <tr>
-                    <td id="G0"></td><td id="F0"></td><td id="E0"></td><td id="D0"></td><td id="C0"></td><td id="B0">
+                    <td id="G0"></td><td id="F0"></td><td id="E0" class = "empty"></td><td id="D0"></td><td id="C0" class = "empty"></td><td id="B0">
                 </tr>                
             </table>
             <table id = "blackJail">
@@ -106,6 +106,7 @@
             <form>
                 <input type="text" id="guessInput" placeholder="Pick a checker to move">
                 <input type="button" id="fireButton" value="Fire!" onclick="">
+
             </form>        
         <script src="backgammon.js"></script>
     </body>
