@@ -24,7 +24,8 @@ function backgammonGame () {
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
         dice: [0,0],
        clearBoard: function() {
-           $('#backgammonGame table tr td').removeClass('.fillBlack').removeClass('.fillWhite').addClass('empty');
+           $('table td').removeClass();
+           $('table td').addClass("empty");
          /*   for (var i = 0; i < model.allPositions.length; i++) {
                 var index = this.allPositions[i];
                 view.emptyCell(index);
@@ -151,19 +152,24 @@ function backgammonGame () {
         guessInput.onkeypress = handleKeyPress;        
     }
     
-        function handleKeyPress (e) {
-        var fireButton = document.getElementById("fireButton");
-        if (e.keyCode === 13) {
-            fireButton.click();
-            return false;
+    function handleKeyPress (e) {
+    var fireButton = document.getElementById("fireButton");
+    if (e.keyCode === 13) {
+        fireButton.click();
+        return false;
         }
     }
     
-        function handleFireButton () {
-        var colInput = document.getElementById("guessInput");
-        var col = colInput.value;
-        controller.moveTest(col);
-        colInput.value = "";
+    function handleFireButton () {
+    var colInput = document.getElementById("guessInput");
+    var col = colInput.value;
+    controller.moveTest(col);
+    colInput.value = "";
+    }
+    
+    function handleClearButton () {
+        var clearButton = document.getElementById("clearButton");
+        clearButton.onclick = model.clearBoard();
     }
     
     function handleRollDieButton() {
