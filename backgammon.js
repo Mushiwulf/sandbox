@@ -2,7 +2,7 @@ function backgammonGame () {
     var view = {
         fillCell: function(index, side) {
             var cell = document.getElementById(index);
-            cell.setAttribute("class", "fill"+side);            
+            cell.setAttribute("class", "fill"+side);
         },
         emptyCell: function(index) {
             var cell = document.getElementById(index);
@@ -24,7 +24,7 @@ function backgammonGame () {
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
         dice: [0,0],
        clearBoard: function() {
-           $('table td').removeClass();
+           $('table td').removeClass("fillBlack");
            $('table td').addClass("empty");
          /*   for (var i = 0; i < model.allPositions.length; i++) {
                 var index = this.allPositions[i];
@@ -121,6 +121,19 @@ function backgammonGame () {
             var newColumn = String.fromCharCode(column.charCodeAt(0) + move);
             return newColumn;
         },
+        findLowest: function (column) {
+            for (var i = 0; i<5; i++) {
+                var index = column + i.toString();
+                var cell = document.getElementById(index);
+                var cellInQuotes = "'"+cell+"'";
+                var cellClass = document.getElementById('E0').className;
+                if (cellClass == "empty") {
+                    return i;
+                }
+                else return 3;
+            }
+            return;
+        },
         // proof of concept function coming. Remove later
         moveTest: function(column, player) {
             player = model.playerTurn;
@@ -134,10 +147,11 @@ function backgammonGame () {
             }
             move = newDirection * die;
             var newColumn= controller.getNewColumn(column, move);
-            var newRow =  column.charAt(1);
-            var newIndex =  newColumn + newRow;// controller.getLowestInColumn(newColumn);
+            var newRow =  controller.findLowest(newColumn);
+            var newIndex = newColumn + newRow;
+           // var newIndex =  newColumn + newRow;// controller.getLowestInColumn(newColumn);
             view.emptyCell(column);
-            view.fillCell(newIndex, player);
+            view.fillCell(newIndex, player); //having issue setting newIndex
             // controller.getActiveChecker(newIndex.charAt(0));
             controller.advancePlayer();
             

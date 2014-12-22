@@ -145,10 +145,11 @@ button {
 }
 
 .fillWhite {
-    background: url("orangeCircle.png") no-repeat center center;
+    background-color: rgba(255,255,255,50);
+    
 }
 .fillBlack {
-    background-color: rgba(255,255,255,50);
+    background-color: rgba(0,0,0,50);
 }
 
 #battleshipButton {
