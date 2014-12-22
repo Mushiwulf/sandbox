@@ -125,14 +125,13 @@ function backgammonGame () {
             for (var i = 0; i<5; i++) {
                 var index = column + i.toString();
                 var cell = document.getElementById(index);
-                var cellInQuotes = "'"+cell+"'";
-                var cellClass = document.getElementById('E0').className;
+                var testCell = 'E0';
+                var cellClass = document.getElementById(testCell).className;
                 if (cellClass == "empty") {
                     return i;
                 }
-                else return 3;
+                else return i+1;
             }
-            return;
         },
         // proof of concept function coming. Remove later
         moveTest: function(column, player) {
