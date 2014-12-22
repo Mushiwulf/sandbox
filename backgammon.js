@@ -123,7 +123,7 @@ function backgammonGame () {
         },
         findLowest: function (column) {
             for (var i = 0; i<5; i++) {
-                var index = column + i.toString();
+                var index = column + i;
                 var cell = document.getElementById(index);
                 var testCell = 'E0';
                 var cellClass = document.getElementById(testCell).className;
@@ -145,11 +145,12 @@ function backgammonGame () {
                 newDirection = -1;
             }
             move = newDirection * die;
+            view.emptyCell(column);
             var newColumn= controller.getNewColumn(column, move);
             var newRow =  controller.findLowest(newColumn);
             var newIndex = newColumn + newRow;
            // var newIndex =  newColumn + newRow;// controller.getLowestInColumn(newColumn);
-            view.emptyCell(column);
+
             view.fillCell(newIndex, player); //having issue setting newIndex
             // controller.getActiveChecker(newIndex.charAt(0));
             controller.advancePlayer();
