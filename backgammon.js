@@ -122,8 +122,39 @@ function backgammonGame () {
             return newColumn;
         },
         findLowest: function (column) {
+            
+            // throwaway code
+            // jquery
+            // http://api.jquery.com/hasclass/
+   /*         if ($('#E0').hasClass('empty'))
+            {
+                alert ('Yep!');
+            }
+            
+            // broken down a bit
+            var someCellViaJq = $('#E0');
+            var itDoesHaveEmptyClassViaJq = someCellViaJq.hasClass('empty');
+            if (itDoesHaveEmptyClassViaJq)
+            {
+                alert('Yep!');
+            }
+            
+            //https://developer.mozilla.org/en-US/docs/Web/API/Element.classList
+            if (document.getElementById('E0').classList.contains('empty'))
+            {
+                alert ('Yep!');
+            }
+            
+            // broken down a bit
+            var someCell = document.getElementById('E0');
+            var someCellsClassList = someCell.classList;
+            if (someCellsClassList.contains('empty'))
+            {
+                alert ('Yep!');
+            }
+        findLowest: function (column) {
             for (var i = 0; i<5; i++) {
-                var index = column + i;
+                var index = column + i.toString();
                 var cell = document.getElementById(index);
                 var testCell = 'E0';
                 var cellClass = document.getElementById(testCell).className;
@@ -131,6 +162,16 @@ function backgammonGame () {
                     return i;
                 }
                 else return i+1;
+            }
+        },
+            //
+  */          
+            for (var i = 0; i<5; i++) {
+                var index = column + i;
+                var cell = document.getElementById(index).className;
+                if (cell == "empty") {
+                    return i;
+                }
             }
         },
         // proof of concept function coming. Remove later
