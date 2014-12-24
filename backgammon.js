@@ -114,8 +114,8 @@ function backgammonGame () {
             }
         },
         findHighest: function (column) {
-            for (var i = 4; i>= 0; i++) {
-                var index = column + 1;
+            for (var i = 4; i>= 0; i--) {
+                var index = column + i;
                 var cell = document.getElementById(index).className;
                 if (cell !== "empty") {
                     return i;
