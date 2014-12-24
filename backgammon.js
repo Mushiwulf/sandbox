@@ -66,24 +66,7 @@ function backgammonGame () {
                 model.playerTurn = "White";
             }
         },
-        getLowestInColumn: function(newColumn) {
-          var columnArray = controller.buildColumnArray(newColumn);
-          var newIndex;
-          var i;
-          for (i=0; i < columnArray.length; i++) {
-              if (columnArray[i] === "empty" || null) {
-                  return newIndex;
-              }
-          }
-        },
-        buildColumnArray: function(column) {
-            var columnArray = [];
-            var i;
-            for (i=0; i<5; i++) {
-                columnArray[i] = column + i.toString();
-            }
-            return columnArray;
-        },
+
 /*        getActiveChecker: function(location, player) {
             // Take the index of the input and search the column for the last occupied slot
             
@@ -130,8 +113,21 @@ function backgammonGame () {
                 }
             }
         },
+        findHighest: function (column) {
+            for (var i = 4; i>= 0; i++) {
+                var index = column + 1;
+                var cell = document.getElementById(index).className;
+                if (cell !== "empty") {
+                    return i;
+                }
+            }
+        },
+        getColumnOnly: function(cell) {
+            var column = cell.charAt(0).toUpperCase();
+            return column;
+        },
         // proof of concept function coming. Remove later
-        moveTest: function(column, player) {
+        moveTest: function(cell, player) {
             player = model.playerTurn;
             var newDirection;
             var move;
@@ -142,7 +138,9 @@ function backgammonGame () {
                 newDirection = -1;
             }
             move = newDirection * die;
-            view.emptyCell(column);
+            var column = controller.getColumnOnly(cell);
+            var oldRow = controller.findHighest(column);
+            view.emptyCell(column+oldRow);
             var newColumn= controller.getNewColumn(column, move);
             var newRow =  controller.findLowest(newColumn);
             var newIndex = newColumn + newRow;
