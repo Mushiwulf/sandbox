@@ -2,7 +2,7 @@ function backgammonGame () {
     var view = {
         fillCell: function(index, side) {
             var cell = document.getElementById(index);
-            cell.setAttribute("class", "fill"+side);
+            cell.setAttribute("class", side);
         },
         emptyCell: function(index) {
             var cell = document.getElementById(index);
@@ -23,8 +23,9 @@ function backgammonGame () {
         startLocationsWhite: ["B0", "B1", "M0", "M1", "M2", "M3", "M4", "R0", "R1", "R2", "T0", "T1", "T2", "T3", "T4"],
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
         dice: [0,0],
+        numberOfMoves: 1,
        clearBoard: function() {
-           $('table td').removeClass("fillBlack");
+           $('table td').removeClass("Black");
            $('table td').addClass("empty");
          /*   for (var i = 0; i < model.allPositions.length; i++) {
                 var index = this.allPositions[i];
@@ -53,6 +54,8 @@ function backgammonGame () {
     var controller = {
         /* I am not sure how I want to get user input. I have been thinking about checking the player and then making their checkers clickable.
            I've also considered doing move validation up front and only making valid columns clickable. But first I think I need to write the function to just move a checker */
+
+        
         setStartingPlayer: function() {
             /* Roll the dice, high roll starts. */
             var playerWhite = Math.floor(Math.random()*6)+1;
@@ -60,11 +63,19 @@ function backgammonGame () {
             
         },
         advancePlayer: function() {
-            if (model.playerTurn === "White") {
-                model.playerTurn = "Black";
-            } else {
+            if (model.numberOfMoves === 0) {
+                model.numberOfMoves = 2; //probably not hte right place for this.
+                if (model.playerTurn === "White") {
+                    model.playerTurn = "Black";
+                    var label = document.getElementById("bgFireButton");
+                    label.setAttribute("value", "Black move!");
+                } else {
                 model.playerTurn = "White";
+                    var label = document.getElementById("bgFireButton");
+                    label.setAttribute("value", "White move!");
+                }
             }
+            model.numberOfMoves--;
         },
 
 /*        getActiveChecker: function(location, player) {
@@ -111,7 +122,7 @@ function backgammonGame () {
                 if (cell == "empty") {
                     return i;
                 }
-            }
+            } return i%4; //for now it keeps the checkers from running over. I really need to wrap this in a layer to check for double and triple stacks
         },
         findHighest: function (column) {
             for (var i = 4; i>= 0; i--) {
@@ -120,11 +131,14 @@ function backgammonGame () {
                 if (cell !== "empty") {
                     return i;
                 }
-            }
+            } 
         },
         getColumnOnly: function(cell) {
             var column = cell.charAt(0).toUpperCase();
             return column;
+        },
+        validatePlayer: function(cell) {
+            
         },
         // proof of concept function coming. Remove later
         moveTest: function(cell, player) {
@@ -155,14 +169,14 @@ function backgammonGame () {
     };
     function init() {
         model.setupBoard();
-        var fireButton = document.getElementById("fireButton");
+        var fireButton = document.getElementById("bgFireButton");
         fireButton.onclick = handleFireButton;
         var guessInput = document.getElementById("guessInput");
         guessInput.onkeypress = handleKeyPress;        
     }
     
     function handleKeyPress (e) {
-    var fireButton = document.getElementById("fireButton");
+    var fireButton = document.getElementById("bgFireButton");
     if (e.keyCode === 13) {
         fireButton.click();
         return false;

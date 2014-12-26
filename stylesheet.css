@@ -144,13 +144,15 @@ button {
   /*  background-color: rgba(100,100,100,20); */
 }
 
-.fillWhite {
-    background-color: rgba(255,255,255,50);
+.White {
+  /*  background-color: rgba(255,255,255,50); */
+    background-color: white;
     border-radius: 50px;
     
 }
-.fillBlack {
-    background-color: rgba(0,0,0,50);
+.Black {
+    background-color: black;
+   /* background-color: rgba(0,0,0,50);*/
     border-radius: 25px;
 }
 
