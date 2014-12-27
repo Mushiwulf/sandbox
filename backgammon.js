@@ -44,11 +44,6 @@ function backgammonGame () {
                 index = this.startLocationsBlack[i];
                 view.fillCell(index, "Black");
             }            
-        },
-        /* Right now I am going to make a function that does nothing to the model, just passes values from the controller to the view. I think inthe future I want to store things in an array in the model, so then this function will make more sense*/
-        updateChecker: function(oldLocation, newLocation, player) {
-            view.emptyCell(oldLocation);
-            view.fillCell(newLocation, player);
         }
     };
     var controller = {
@@ -78,31 +73,10 @@ function backgammonGame () {
             model.numberOfMoves--;
         },
 
-/*        getActiveChecker: function(location, player) {
-            // Take the index of the input and search the column for the last occupied slot
-            
-            var i = 0;
-            do {
-                location = location + i.toSring;
-                location = document.getElementById(location);
-                view.fillCell(location, player);
-                i++;
-            } while (location != null || "empty");
-        }, */
-        moveChecker: function(player, location, die) {
-            var roll = this.die;
-            var direction;
-            if (player === "White") {
-                direction = 1;
-            } else {
-                direction = -1;
-            }
-            var move = roll*direction;
-            
-            var newLocation = String.fromCharCode(location.charCodeAt(0) + move);
-            model.updateChecker (location, newLocation, player);
+
+
             /* there is a lot of half baked stuff here that I ened to refine, but I wanted to get my general idea down */
-        },
+
         rollDice: function() {
             // loop through the dice array and grab two random numbers. Send to view.
             var dice = model.dice;
@@ -138,11 +112,15 @@ function backgammonGame () {
             return column;
         },
         validatePlayer: function(cell) {
-            
+            var player = model.playerTurn;
+            var columnColor = "White";
+            if (player != columnColor || "empty") {
+                controller.moveTest(cell);
+            }
         },
         // proof of concept function coming. Remove later
-        moveTest: function(cell, player) {
-            player = model.playerTurn;
+        moveTest: function(cell) {
+            var player = model.playerTurn;
             var newDirection;
             var move;
             var die = 2;
@@ -186,7 +164,7 @@ function backgammonGame () {
     function handleFireButton () {
     var colInput = document.getElementById("guessInput");
     var col = colInput.value;
-    controller.moveTest(col);
+    controller.validatePlayer(col);
     colInput.value = "";
     }
     
