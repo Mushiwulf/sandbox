@@ -12,20 +12,21 @@ function backgammonGame () {
                
         },
         showDice: function(roll, die) {
-            var dieBin1 = document.getElementById("dieBin1");
-            dieBin1.innerHTML = "<p>" + die + "</p>";
+                var dieBin1 = document.getElementById("dieBin1");
+                dieBin1.innerHTML = "<p>" + die + "</p>";
+            
         }
         
     };
     var model = {
         playerTurn: "Black",
-        allPositions: ["B0", "B1", "B2", "B3", "B4", "C0", "C1"],
         startLocationsWhite: ["B0", "B1", "M0", "M1", "M2", "M3", "M4", "R0", "R1", "R2", "T0", "T1", "T2", "T3", "T4"],
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
         dice: [0,0],
         numberOfMoves: 1,
        clearBoard: function() {
            $('table td').removeClass("Black");
+            $('table td').removeClass("White");
            $('table td').addClass("empty");
          /*   for (var i = 0; i < model.allPositions.length; i++) {
                 var index = this.allPositions[i];
@@ -60,6 +61,7 @@ function backgammonGame () {
         advancePlayer: function() {
             if (model.numberOfMoves === 0) {
                 model.numberOfMoves = 2; //probably not hte right place for this.
+                controller.rollDice();
                 if (model.playerTurn === "White") {
                     model.playerTurn = "Black";
                     var label = document.getElementById("bgFireButton");
@@ -115,6 +117,7 @@ function backgammonGame () {
             var player = model.playerTurn;
             var columnColor = "White";
             if (player != columnColor || "empty") {
+             //   alert("wrong player");
                 controller.moveTest(cell);
             }
         },
