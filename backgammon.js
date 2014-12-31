@@ -113,11 +113,20 @@ function backgammonGame () {
             var column = cell.charAt(0).toUpperCase();
             return column;
         },
+        getColumnColor: function(cell) {
+            var column = controller.getColumnOnly(cell);
+            var row = controller.findHighest(column);
+            var index = column + row;
+            var color = document.getElementById(index).className;
+            return color;
+        },
         validatePlayer: function(cell) {
             var player = model.playerTurn;
-            var columnColor = "White";
-            if (player != columnColor || "empty") {
-             //   alert("wrong player");
+            var columnColor = controller.getColumnColor(cell);
+            if (player !== columnColor) {
+                alert("wrong player");
+                
+            } else {
                 controller.moveTest(cell);
             }
         },
