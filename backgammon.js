@@ -162,15 +162,20 @@ function backgammonGame () {
             var oldRow = controller.findHighest(column);
             view.emptyCell(column+oldRow);
             var newColumn= controller.getNewColumn(column, move);
-            columnColor = controller.getColumnColor(newColumn);
-            if (columnColor === player || columnColor ==="empty") {
-                controller.findLowest(newColumn, player);
-            controller.advancePlayer();
+            var newColumnCode = newColumn.charCodeAt(0);
+            if (newColumnCode < 89 && newColumnCode > 65) {
+                columnColor = controller.getColumnColor(newColumn);
+                if (columnColor === player || columnColor ==="empty") {
+                    controller.findLowest(newColumn, player);
+                    controller.advancePlayer();
+                } else {
+                    alert("invalid move");
+                    view.fillCell(column+oldRow, player);
+                }
             } else {
-                alert("invalid move");
+                alert("off the board (not ready for bearing off)");
                 view.fillCell(column+oldRow, player);
             }
-            
         }
         
     };
