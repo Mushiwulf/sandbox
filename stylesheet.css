@@ -150,9 +150,24 @@ button {
     border-radius: 50px;
     
 }
+.White2 {
+    background-color: white;
+    border: 1px solid green;
+    border-radius: 25px;
+}
 .Black {
     background-color: black;
    /* background-color: rgba(0,0,0,50);*/
+    border-radius: 25px;
+}
+.Black2 {
+    background-color: black;
+    border: 1px solid green;
+    border-radius: 25px;
+}
+.Black3 {
+    background-color: black;
+    border: 1px solid red;
     border-radius: 25px;
 }
 

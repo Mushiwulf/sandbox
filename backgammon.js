@@ -1,5 +1,6 @@
 function backgammonGame () {
     var view = {
+        
         fillCell: function(index, side) {
             var cell = document.getElementById(index);
             cell.setAttribute("class", side);
@@ -91,7 +92,7 @@ function backgammonGame () {
             var newColumn = String.fromCharCode(column.charCodeAt(0) + move);
             return newColumn;
         },
-        findLowest: function (column) {
+/*        findLowest: function (column) {
             for (var i = 0; i<5; i++) {
                 var index = column + i;
                 var cell = document.getElementById(index).className;
@@ -100,6 +101,29 @@ function backgammonGame () {
                 }
             } return i%4; //for now it keeps the checkers from running over. I really need to wrap this in a layer to check for double and triple stacks
         },
+*/        
+        findLowest: function (column, player) {
+          //  var player = controller;
+            for ( var i = 0; i<3; i++) {
+                for (var j = 0; j<5; j++) {
+                    var index = column + j;
+                    var cell = document.getElementById(index).className;
+                    if (cell === "empty") {
+                        view.fillCell (index, player);
+                        return;
+                    } else if (i === 1 && cell === player) {
+                        view.fillCell(index, player + "2");
+                        return;
+                    } else if (i === 2 && cell === player + "2") {
+                        view.fillCell(index, player + "3");
+                        return;
+                    } else {
+                    }
+                    
+                }
+            }
+        },
+        
         findHighest: function (column) {
             for (var i = 4; i>= 0; i--) {
                 var index = column + i;
@@ -146,12 +170,9 @@ function backgammonGame () {
             var oldRow = controller.findHighest(column);
             view.emptyCell(column+oldRow);
             var newColumn= controller.getNewColumn(column, move);
-            var newRow =  controller.findLowest(newColumn);
-            var newIndex = newColumn + newRow;
-           // var newIndex =  newColumn + newRow;// controller.getLowestInColumn(newColumn);
-
-            view.fillCell(newIndex, player); //having issue setting newIndex
-            // controller.getActiveChecker(newIndex.charAt(0));
+           /* var newRow = */ controller.findLowest(newColumn, player);
+//            var newIndex = newColumn + newRow;
+//            view.fillCell(newIndex, player);
             controller.advancePlayer();
             
         }
