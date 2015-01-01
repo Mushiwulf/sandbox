@@ -92,16 +92,7 @@ function backgammonGame () {
             var newColumn = String.fromCharCode(column.charCodeAt(0) + move);
             return newColumn;
         },
-/*        findLowest: function (column) {
-            for (var i = 0; i<5; i++) {
-                var index = column + i;
-                var cell = document.getElementById(index).className;
-                if (cell == "empty") {
-                    return i;
-                }
-            } return i%4; //for now it keeps the checkers from running over. I really need to wrap this in a layer to check for double and triple stacks
-        },
-*/        
+       
         findLowest: function (column, player) {
           //  var player = controller;
             for ( var i = 0; i<3; i++) {
@@ -125,13 +116,13 @@ function backgammonGame () {
         },
         
         findHighest: function (column) {
-            for (var i = 4; i>= 0; i--) {
+            for (var i = 4; i> 0; i--) {
                 var index = column + i;
                 var cell = document.getElementById(index).className;
                 if (cell !== "empty") {
                     return i;
                 }
-            } 
+            } return 0;
         },
         getColumnOnly: function(cell) {
             var column = cell.charAt(0).toUpperCase();
@@ -160,6 +151,7 @@ function backgammonGame () {
             var newDirection;
             var move;
             var die = 2;
+            var columnColor;
             if (player === "White") {
                 newDirection = 1;
             } else {
@@ -170,10 +162,13 @@ function backgammonGame () {
             var oldRow = controller.findHighest(column);
             view.emptyCell(column+oldRow);
             var newColumn= controller.getNewColumn(column, move);
-           /* var newRow = */ controller.findLowest(newColumn, player);
-//            var newIndex = newColumn + newRow;
-//            view.fillCell(newIndex, player);
+            columnColor = controller.getColumnColor(newColumn);
+            if (columnColor === player || "empty") {
+                controller.findLowest(newColumn, player);
             controller.advancePlayer();
+            } else {
+                return;
+            }
             
         }
         
