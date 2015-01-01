@@ -150,7 +150,7 @@ function backgammonGame () {
             var player = model.playerTurn;
             var newDirection;
             var move;
-            var die = 2;
+            var die = 5;
             var columnColor;
             if (player === "White") {
                 newDirection = 1;
@@ -163,11 +163,12 @@ function backgammonGame () {
             view.emptyCell(column+oldRow);
             var newColumn= controller.getNewColumn(column, move);
             columnColor = controller.getColumnColor(newColumn);
-            if (columnColor === player || "empty") {
+            if (columnColor === player || columnColor ==="empty") {
                 controller.findLowest(newColumn, player);
             controller.advancePlayer();
             } else {
-                return;
+                alert("invalid move");
+                view.fillCell(column+oldRow, player);
             }
             
         }
