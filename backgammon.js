@@ -13,8 +13,8 @@ function backgammonGame () {
                
         },
         showDice: function(roll, die) {
-                var dieBin1 = document.getElementById("dieBin1");
-                dieBin1.innerHTML = "<p>" + die + "</p>";
+                var die1 = document.getElementById("die1");
+                die1.innerHTML = "<p>" + roll + "</p>";
             
         }
         
@@ -61,16 +61,18 @@ function backgammonGame () {
         },
         advancePlayer: function() {
             if (model.numberOfMoves === 0) {
-                model.numberOfMoves = 2; //probably not hte right place for this.
+                model.numberOfMoves = 2; //probably not the right place for this.
                 controller.rollDice();
                 if (model.playerTurn === "White") {
                     model.playerTurn = "Black";
                     var label = document.getElementById("bgFireButton");
                     label.setAttribute("value", "Black move!");
+                    controller.rollDice();
                 } else {
                 model.playerTurn = "White";
                     var label = document.getElementById("bgFireButton");
                     label.setAttribute("value", "White move!");
+                    controller.rollDice();
                 }
             }
             model.numberOfMoves--;
@@ -168,6 +170,7 @@ function backgammonGame () {
                 if (columnColor === player || columnColor ==="empty") {
                     controller.findLowest(newColumn, player);
                     controller.advancePlayer();
+//                    controller.rollDice();
                 } else {
                     alert("invalid move");
                     view.fillCell(column+oldRow, player);
