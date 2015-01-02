@@ -13,7 +13,7 @@ function backgammonGame () {
                
         },
         showDice: function(roll, die) {
-                var die1 = document.getElementById("die1");
+                var die1 = document.getElementById("die"+die);
                 die1.innerHTML = "<p>" + roll + "</p>";
             
         }
@@ -23,7 +23,7 @@ function backgammonGame () {
         playerTurn: "Black",
         startLocationsWhite: ["B0", "B1", "M0", "M1", "M2", "M3", "M4", "R0", "R1", "R2", "T0", "T1", "T2", "T3", "T4"],
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
-        dice: [0,0],
+        dice: [1,2],
         numberOfMoves: 1,
        clearBoard: function() {
            $('table td').removeClass("Black");
@@ -152,7 +152,7 @@ function backgammonGame () {
             var player = model.playerTurn;
             var newDirection;
             var move;
-            var die = 5;
+            var die = model.dice[0];
             var columnColor;
             if (player === "White") {
                 newDirection = 1;
