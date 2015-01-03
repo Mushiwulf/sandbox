@@ -72,12 +72,12 @@ function backgammonGame () {
                     model.playerTurn = "Black";
                     var label = document.getElementById("bgFireButton");
                     label.setAttribute("value", "Black move!");
-                    controller.rollDice();
+                  //  controller.rollDice();
                 } else {
                 model.playerTurn = "White";
                     var label = document.getElementById("bgFireButton");
                     label.setAttribute("value", "White move!");
-                    controller.rollDice();
+                  //  controller.rollDice();
                 }
             }
             model.numberOfMoves--;
@@ -234,7 +234,7 @@ function backgammonGame () {
             move = newDirection * roll;
             if (jailOccupied.innerHTML > 0) {
                 if (player === "Black") {
-                    column = "Z"+move;
+                    column = "Z";
                 } else {
                     column = "A";
                 } var jail = document.getElementById(player + "Cell");
@@ -246,21 +246,19 @@ function backgammonGame () {
             }
             var newColumn= controller.getNewColumn(column, move);
             var newColumnCode = newColumn.charCodeAt(0);
-            if (newColumnCode < 90 && newColumnCode > 65) {
+            if (newColumnCode < 90 && newColumnCode > 65) {    //check for new column on board
                 columnColor = controller.getColumnColor(newColumn);
-                if (columnColor === player || columnColor ==="empty") {
+                if (columnColor === player || columnColor ==="empty") { // check that new column is either empty or occupied by hte active player
                     controller.findLowest(newColumn, player);
                     controller.advancePlayer();
-                } else { 
+                } else {                                            // otherwise, check if it is capturable
                     var capturableCell = controller.getCapturable(newColumn+1);
                     if (capturableCell === "empty") {
-                        //capture cell
                         view.fillCell(newColumn+0,player);
-                        // need to send captured checker to jail still
                         var enemyJail = document.getElementById(inactivePlayer + "Cell");
                         enemyJail.innerHTML = Number(enemyJail.innerHTML)+1;
                         controller.advancePlayer();
-                    } else {                 
+                    } else {                                       // if not empty, occupied by player, or capturable, it is not a valid move
                         alert("invalid move");
                         view.fillCell(column+oldRow, player);
                     }
