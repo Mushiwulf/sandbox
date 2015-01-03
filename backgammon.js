@@ -79,6 +79,11 @@ function backgammonGame () {
             }
             model.numberOfMoves--;
         },
+        activeDie: function(id) {
+             var die = document.getElementById(id);
+             model.activeDie = die.innerHTML;
+             die.setAttribute("class", "active")
+        },
         setActiveDie: function(die) {
             //this should take the active die and indicate that somehow and then the player needs to select a column.
             //Alternately, they will have selected a column first and then this will fire the move function passing the column and the die.
@@ -230,7 +235,7 @@ function backgammonGame () {
                 } else {
                     column = "A";
                 } var jail = document.getElementById(player + "Cell");
-                  jail.innerHTML = Number(jail.innerHTML)-1;
+                  jail.innerHTML = Number(jail.innerHTML)-1; //abort decrement if unable to play
             } else {
                 column = controller.getColumnOnly(cell);
                 var oldRow = controller.findHighest(column);
@@ -291,7 +296,11 @@ function backgammonGame () {
         var clearButton = document.getElementById("clearButton");
         clearButton.onclick = model.clearBoard();
     }
-    
+    function handleClick (e) {
+        var dieClick = document.getElementById("die0");
+        var roll = dieClick.innerHTML;
+        controller.activeDie(roll);
+    }
     function handleRollDieButton() {
         
     }

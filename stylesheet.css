@@ -138,6 +138,9 @@ button {
     border-radius: 5px;
     background-color: rgba(200, 210, 200, 0.95);
 }
+.active {
+    border:1px solid orange;
+}
 .hit {
     background: url("ship.png") no-repeat center center;
 }
