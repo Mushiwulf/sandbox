@@ -14,7 +14,7 @@ function backgammonGame () {
         },
         showDice: function(roll, die) {
                 var die1 = document.getElementById("die"+die);
-                die1.innerHTML = "<p>" + roll + "</p>";
+                die1.innerHTML = roll;
             
         }
         
@@ -25,6 +25,8 @@ function backgammonGame () {
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
         dice: [1,2],
         numberOfMoves: 1,
+        activeDie: null,
+        activeColumn: null,
        clearBoard: function() {
            $('table td').removeClass("Black");
             $('table td').removeClass("White");
@@ -76,6 +78,22 @@ function backgammonGame () {
                 }
             }
             model.numberOfMoves--;
+        },
+        setActiveDie: function(die) {
+            //this should take the active die and indicate that somehow and then the player needs to select a column.
+            //Alternately, they will have selected a column first and then this will fire the move function passing the column and the die.
+            model.activeDie = die;
+            var column = model.activeColumn;
+            if (column != null) {
+                controller.moveTest2(die, column);
+            }
+        },
+        setActiveColumn: function(column) {
+            model.activeColumn = column;
+            var die = model.activeDie;
+            if (die != null) {
+                controller.moveTest2(die, column);
+            }
         },
 
 
@@ -137,6 +155,10 @@ function backgammonGame () {
             var color = document.getElementById(index).className;
             return color;
         },
+        getCapturable: function(cell) {
+            var cellClass = document.getElementById(cell).className;
+            return cellClass;
+        },
         validatePlayer: function(cell) {
             var player = model.playerTurn;
             var columnColor = controller.getColumnColor(cell);
@@ -148,6 +170,35 @@ function backgammonGame () {
             }
         },
         // proof of concept function coming. Remove later
+        moveTest2: function(die, column) { //for mouseevents only. refere to moveTest for current function
+            var player = model.playerTurn;
+            var newDirection;
+            var move;
+            var columnColor;
+            if (player === "White") {
+                newDirection = 1;
+            } else {
+                newDirection = -1;
+            }
+            move = newDirection * die;
+            var oldRow = controller.findHighest(column);
+            view.emptyCell(column+oldRow);
+            var newColumn= controller.getNewColumn(column, move);
+            var newColumnCode = newColumn.charCodeAt(0);
+            if (newColumnCode < 90 && newColumnCode > 65) {
+                columnColor = controller.getColumnColor(newColumn);
+                if (columnColor === player || columnColor ==="empty") {
+                    controller.findLowest(newColumn, player);
+                    controller.advancePlayer();
+                } else {
+                    alert("invalid move");
+                    view.fillCell(column+oldRow, player);
+                }
+            } else {
+                alert("off the board (not ready for bearing off)");
+                view.fillCell(column+oldRow, player);
+            }            
+        },
         moveTest: function(cell) {
             var player = model.playerTurn;
             var newDirection;
@@ -165,15 +216,21 @@ function backgammonGame () {
             view.emptyCell(column+oldRow);
             var newColumn= controller.getNewColumn(column, move);
             var newColumnCode = newColumn.charCodeAt(0);
-            if (newColumnCode < 89 && newColumnCode > 65) {
+            if (newColumnCode < 90 && newColumnCode > 65) {
                 columnColor = controller.getColumnColor(newColumn);
                 if (columnColor === player || columnColor ==="empty") {
                     controller.findLowest(newColumn, player);
                     controller.advancePlayer();
 //                    controller.rollDice();
-                } else {
-                    alert("invalid move");
-                    view.fillCell(column+oldRow, player);
+                } else { //experimental
+                    var capturableCell = controller.getCapturable(newColumn+1);
+                    if (capturableCell === "empty") {
+                        //capture cell
+                        view.fillCell(newColumn+0,player);
+                    } else {                 // experimental
+                        alert("invalid move");
+                        view.fillCell(column+oldRow, player);
+                    }
                 }
             } else {
                 alert("off the board (not ready for bearing off)");
