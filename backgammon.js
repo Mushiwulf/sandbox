@@ -193,6 +193,7 @@ function backgammonGame () {
                 } else {
                     alert("invalid move");
                     view.fillCell(column+oldRow, player);
+
                 }
             } else {
                 alert("off the board (not ready for bearing off)");
@@ -222,12 +223,14 @@ function backgammonGame () {
                     controller.findLowest(newColumn, player);
                     controller.advancePlayer();
 //                    controller.rollDice();
-                } else { //experimental
+                } else { 
                     var capturableCell = controller.getCapturable(newColumn+1);
                     if (capturableCell === "empty") {
                         //capture cell
                         view.fillCell(newColumn+0,player);
-                    } else {                 // experimental
+                        // need to send captured checker to jail still
+                        controller.advancePlayer();
+                    } else {                 
                         alert("invalid move");
                         view.fillCell(column+oldRow, player);
                     }
