@@ -65,6 +65,9 @@ function backgammonGame () {
             if (model.numberOfMoves === 0) {
                 model.numberOfMoves = 2; //probably not the right place for this.
                 controller.rollDice();
+                if (model.dice[0] === model.dice[1]) {
+                    model.numberOfMoves = 4;
+                }
                 if (model.playerTurn === "White") {
                     model.playerTurn = "Black";
                     var label = document.getElementById("bgFireButton");
@@ -271,6 +274,7 @@ function backgammonGame () {
     };
     function init() {
         model.setupBoard();
+        controller.rollDice();
         var fireButton = document.getElementById("bgFireButton");
         fireButton.onclick = handleFireButton;
         var guessInput = document.getElementById("guessInput");

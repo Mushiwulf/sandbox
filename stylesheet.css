@@ -108,19 +108,40 @@
 }
 #dice {
     position: absolute;
-    left: 309px;
+    left: 129px;
     top: 294px;
-    background-color: gray;
+   /* background-color: gray; */
     text-align: center;
     font-size: 1.5em;
 }
 #die0 {
     background-color: rgb(255,229,202);
-    color: rgb(80, 40, 0);
+    color: rgb(80,40,0);
+
 }
 #die1 {
-    background-color: rgb(80, 40, 0);
+    background-color: rgb(80,40,0);
     color: rgb(255,229,202);
+}
+#BlackHome {
+    position: absolute;
+    text-align: center;
+    background-color: gray;
+    font-size: 2.5em;
+    color: rgb(80,40,0);
+    left: 735px;
+    top: 385px;
+    border-radius: 25px;
+}
+#WhiteHome {
+    position: absolute;
+    text-align: center;
+    background-color: gray;
+    font-size: 2.5em;
+    color: rgb(255,229,202);
+    left: 735px;
+    top: 202px;
+    border-radius: 25px;
 }
 form {
     position: absolute;
