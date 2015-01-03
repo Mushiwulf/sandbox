@@ -159,19 +159,28 @@ function backgammonGame () {
             var cellClass = document.getElementById(cell).className;
             return cellClass;
         },
-        validatePlayer: function(cell) {
+        validatePlayer: function(cell, die) {
             var player = model.playerTurn;
             var columnColor = controller.getColumnColor(cell);
             if (player !== columnColor) {
                 alert("wrong player");
                 
             } else {
-                controller.moveTest(cell);
+                controller.moveTest(cell, die);
+            }
+        },
+        getInactivePlayer: function() {
+            var player = model.playerTurn;
+            if (player === "Black") {
+                return "White";
+            } else {
+                return "Black";
             }
         },
         // proof of concept function coming. Remove later
         moveTest2: function(die, column) { //for mouseevents only. refere to moveTest for current function
             var player = model.playerTurn;
+
             var newDirection;
             var move;
             var columnColor;
@@ -200,21 +209,33 @@ function backgammonGame () {
                 view.fillCell(column+oldRow, player);
             }            
         },
-        moveTest: function(cell) {
+        moveTest: function(cell, die) {
             var player = model.playerTurn;
+            var inactivePlayer = controller.getInactivePlayer();
             var newDirection;
             var move;
-            var die = model.dice[0];
+            var column;
+            var roll = model.dice[0];
             var columnColor;
+            var jailOccupied = document.getElementById(player + "Cell");
             if (player === "White") {
                 newDirection = 1;
             } else {
                 newDirection = -1;
             }
-            move = newDirection * die;
-            var column = controller.getColumnOnly(cell);
-            var oldRow = controller.findHighest(column);
-            view.emptyCell(column+oldRow);
+            move = newDirection * roll;
+            if (jailOccupied.innerHTML > 0) {
+                if (player === "Black") {
+                    column = "Z"+move;
+                } else {
+                    column = "A";
+                } var jail = document.getElementById(player + "Cell");
+                  jail.innerHTML = Number(jail.innerHTML)-1;
+            } else {
+                column = controller.getColumnOnly(cell);
+                var oldRow = controller.findHighest(column);
+                view.emptyCell(column+oldRow);
+            }
             var newColumn= controller.getNewColumn(column, move);
             var newColumnCode = newColumn.charCodeAt(0);
             if (newColumnCode < 90 && newColumnCode > 65) {
@@ -229,6 +250,8 @@ function backgammonGame () {
                         //capture cell
                         view.fillCell(newColumn+0,player);
                         // need to send captured checker to jail still
+                        var jail = document.getElementById(inactivePlayer + "Cell");
+                        jail.innerHTML = Number(jail.innerHTML)+1;
                         controller.advancePlayer();
                     } else {                 
                         alert("invalid move");
