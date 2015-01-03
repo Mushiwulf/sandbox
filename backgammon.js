@@ -243,15 +243,14 @@ function backgammonGame () {
                 if (columnColor === player || columnColor ==="empty") {
                     controller.findLowest(newColumn, player);
                     controller.advancePlayer();
-//                    controller.rollDice();
                 } else { 
                     var capturableCell = controller.getCapturable(newColumn+1);
                     if (capturableCell === "empty") {
                         //capture cell
                         view.fillCell(newColumn+0,player);
                         // need to send captured checker to jail still
-                        var jail = document.getElementById(inactivePlayer + "Cell");
-                        jail.innerHTML = Number(jail.innerHTML)+1;
+                        var enemyJail = document.getElementById(inactivePlayer + "Cell");
+                        enemyJail.innerHTML = Number(enemyJail.innerHTML)+1;
                         controller.advancePlayer();
                     } else {                 
                         alert("invalid move");

@@ -83,6 +83,7 @@
 }
 #blackJail {
     background-color: rgb(80, 40, 0);
+    color: rgb(255,229,202);
     text-align: center;
     position: absolute;
     left:335px;
@@ -92,11 +93,13 @@
 }
 #whiteJail {
     background-color: rgb(255,229,202);
+    color: rgb(80, 40, 0);
     border-radius: 25px;
     text-align: center;
     position: absolute;
     left: 334px;
     top: 385px;
+    font-size: 1.5em;
 }
 #backgammonGame td {
    /* background-color: blue;*/
