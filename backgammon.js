@@ -187,28 +187,6 @@ function backgammonGame () {
                 return "Black";
             }
         },
-        bearingOffLegal: function(player) {
-            var blackClearArray = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S"];
-            var whiteClearArray = ["H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"];
-            var activeArray;
-            if (model.player === "Black") {
-                activeArray = blackClearArray;
-            } else {
-                activeArray = whiteClearArray;
-            }
-            for (var i=0; i<activeArray.length; i++) {
-                for (var j=0; j<5; j++)
-                var column = activeArray[i];
-                var row = j;
-                var index = column+row;
-                var indexClass = document.getElementById(index).className;
-                var firstIndexClass = indexClass.charAt(0);
-                var firstPlayer = model.player.charAt(0);
-                if (firstIndexClass === firstPlayer) {
-                    return false;
-                }
-            }
-        },
         bearingOffCounterUp: function(player) {
             model["bearingOff"+player]++;
         },
@@ -303,10 +281,7 @@ function backgammonGame () {
                     }
                 }
             } else {
-               /* if (controller.bearingOffLegal(player)) {
-                    //increment player home
-                    alert("bearing off!"); 
-                } // check if bearing off is legal */
+
                 alert("off the board (not ready for bearing off)");
                 view.fillCell(column+oldRow, player);
             }
