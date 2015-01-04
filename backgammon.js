@@ -260,6 +260,7 @@ function backgammonGame () {
                     controller.findLowest(newColumn, player);
                     // try another bearing off method here. whenever a checker passes the threshold, add 1 to the bearing off value. when value = 15, bearing off is legal
                     //make sure to check oldColumn for origin outside zone
+                    // need to get column code instead of just the letter
                     if (((player==="Black" && newColumnCode<71)&& column>70) || ((player==="White"&& newColumnCode>83)&& column < 84)) {
                         controller.bearingOffCounterUp(player);
                     } 
@@ -273,6 +274,7 @@ function backgammonGame () {
                         if (((player==="Black" && newColumnCode<71)&& column>70) || ((player==="White"&& newColumnCode>83)&& column < 84)) {
                             controller.bearingOffCounterUp(player);
                         }
+                        //need to check if jailed toekn was in the bearing off zone before decrementing
                         controller.bearingOffCounterDown(inactivePlayer);
                         controller.advancePlayer();
                     } else {                                       // if not empty, occupied by player, or capturable, it is not a valid move
