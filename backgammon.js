@@ -275,8 +275,9 @@ function backgammonGame () {
                         if (((player==="Black" && newColumnCode<72)&& columnCode>71) || ((player==="White"&& newColumnCode>83)&& columnCode < 84)) {
                             controller.bearingOffCounterUp(player);
                         }
-                        //need to check if jailed toekn was in the bearing off zone before decrementing
+                        if (((player === "Black")&& newColumnCode>83) || ((player === "White")&& newColumnCode<72)) {
                         controller.bearingOffCounterDown(inactivePlayer);
+                        } // ^ checks for captured token in bearing off zone
                         controller.advancePlayer();
                     } else {                                       // if not empty, occupied by player, or capturable, it is not a valid move
                         alert("invalid move");
