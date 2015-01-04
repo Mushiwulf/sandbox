@@ -254,6 +254,7 @@ function backgammonGame () {
             }
             var newColumn= controller.getNewColumn(column, move);
             var newColumnCode = newColumn.charCodeAt(0);
+            var columnCode = column.charCodeAt(0);
             if (newColumnCode < 90 && newColumnCode > 65) {    //check for new column on board
                 columnColor = controller.getColumnColor(newColumn);
                 if (columnColor === player || columnColor ==="empty") { // check that new column is either empty or occupied by hte active player
@@ -261,7 +262,7 @@ function backgammonGame () {
                     // try another bearing off method here. whenever a checker passes the threshold, add 1 to the bearing off value. when value = 15, bearing off is legal
                     //make sure to check oldColumn for origin outside zone
                     // need to get column code instead of just the letter
-                    if (((player==="Black" && newColumnCode<71)&& column>70) || ((player==="White"&& newColumnCode>83)&& column < 84)) {
+                    if (((player==="Black" && newColumnCode<72)&& columnCode>71) || ((player==="White"&& newColumnCode>83)&& columnCode < 84)) {
                         controller.bearingOffCounterUp(player);
                     } 
                     controller.advancePlayer();
@@ -271,7 +272,7 @@ function backgammonGame () {
                         view.fillCell(newColumn+0,player);
                         var enemyJail = document.getElementById(inactivePlayer + "Cell");
                         enemyJail.innerHTML = Number(enemyJail.innerHTML)+1;
-                        if (((player==="Black" && newColumnCode<71)&& column>70) || ((player==="White"&& newColumnCode>83)&& column < 84)) {
+                        if (((player==="Black" && newColumnCode<72)&& columnCode>71) || ((player==="White"&& newColumnCode>83)&& columnCode < 84)) {
                             controller.bearingOffCounterUp(player);
                         }
                         //need to check if jailed toekn was in the bearing off zone before decrementing
@@ -283,6 +284,10 @@ function backgammonGame () {
                     }
                 }
             } else {
+                var bearingOffLegal = "bearingOff"+player;
+                if (bearingOffLegal == 15) {
+                    alert("you may bear off"); //need some bearing off code here
+                }
 
                 alert("off the board (not ready for bearing off)");
                 view.fillCell(column+oldRow, player);
