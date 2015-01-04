@@ -25,6 +25,8 @@ function backgammonGame () {
         startLocationsBlack: ["Y0", "Y1", "N0", "N1", "N2", "N3", "N4", "I0", "I1", "I2", "G0", "G1", "G2", "G3", "G4"],
         dice: [1,2],
         numberOfMoves: 1,
+        bearingOffBlack: 5,
+        bearingOffWhite: 5,
         activeDie: null,
         activeColumn: null,
        clearBoard: function() {
@@ -185,6 +187,34 @@ function backgammonGame () {
                 return "Black";
             }
         },
+        bearingOffLegal: function(player) {
+            var blackClearArray = ["B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S"];
+            var whiteClearArray = ["H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y"];
+            var activeArray;
+            if (model.player === "Black") {
+                activeArray = blackClearArray;
+            } else {
+                activeArray = whiteClearArray;
+            }
+            for (var i=0; i<activeArray.length; i++) {
+                for (var j=0; j<5; j++)
+                var column = activeArray[i];
+                var row = j;
+                var index = column+row;
+                var indexClass = document.getElementById(index).className;
+                var firstIndexClass = indexClass.charAt(0);
+                var firstPlayer = model.player.charAt(0);
+                if (firstIndexClass === firstPlayer) {
+                    return false;
+                }
+            }
+        },
+        bearingOffCounterUp: function(player) {
+            model["bearingOff"+player]++;
+        },
+        bearingOffCounterDown: function(inactivePlayer){
+            model["bearingOff"+inactivePlayer]--;
+        },
         // proof of concept function coming. Remove later
         moveTest2: function(die, column) { //for mouseevents only. refere to moveTest for current function
             var player = model.playerTurn;
@@ -250,6 +280,11 @@ function backgammonGame () {
                 columnColor = controller.getColumnColor(newColumn);
                 if (columnColor === player || columnColor ==="empty") { // check that new column is either empty or occupied by hte active player
                     controller.findLowest(newColumn, player);
+                    // try another bearing off method here. whenever a checker passes the threshold, add 1 to the bearing off value. when value = 15, bearing off is legal
+                    //make sure to check oldColumn for origin outside zone
+                    if (((player==="Black" && newColumnCode<71)&& column>70) || ((player==="White"&& newColumnCode>83)&& column < 84)) {
+                        controller.bearingOffCounterUp(player);
+                    } 
                     controller.advancePlayer();
                 } else {                                            // otherwise, check if it is capturable
                     var capturableCell = controller.getCapturable(newColumn+1);
@@ -257,6 +292,10 @@ function backgammonGame () {
                         view.fillCell(newColumn+0,player);
                         var enemyJail = document.getElementById(inactivePlayer + "Cell");
                         enemyJail.innerHTML = Number(enemyJail.innerHTML)+1;
+                        if (((player==="Black" && newColumnCode<71)&& column>70) || ((player==="White"&& newColumnCode>83)&& column < 84)) {
+                            controller.bearingOffCounterUp(player);
+                        }
+                        controller.bearingOffCounterDown(inactivePlayer);
                         controller.advancePlayer();
                     } else {                                       // if not empty, occupied by player, or capturable, it is not a valid move
                         alert("invalid move");
@@ -264,6 +303,10 @@ function backgammonGame () {
                     }
                 }
             } else {
+               /* if (controller.bearingOffLegal(player)) {
+                    //increment player home
+                    alert("bearing off!"); 
+                } // check if bearing off is legal */
                 alert("off the board (not ready for bearing off)");
                 view.fillCell(column+oldRow, player);
             }
@@ -279,8 +322,6 @@ function backgammonGame () {
         guessInput.onkeypress = handleKeyPress;      
         var clearButton = document.getElementById("clearButton");
         clearButton.onclick = handleClearButton;
-        var activeDie = document.getElementById("die0");
-        activeDie.onclick = handleClick;
     }
     
     function handleKeyPress (e) {
@@ -297,7 +338,7 @@ function backgammonGame () {
     controller.validatePlayer(col);
     colInput.value = "";
     }
-    function handleDiceButton () {
+    function handleSwitchDiceButton () {
         
     }
     
