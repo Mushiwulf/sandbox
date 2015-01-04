@@ -234,6 +234,11 @@ function backgammonGame () {
             var roll = model.dice[0];
             var columnColor;
             var jailOccupied = document.getElementById(player + "Cell");
+            
+            if (model.numberOfMoves === 0) {
+                roll = model.dice[1];
+            }
+            
             if (player === "White") {
                 newDirection = 1;
             } else {
@@ -305,6 +310,8 @@ function backgammonGame () {
         guessInput.onkeypress = handleKeyPress;      
         var clearButton = document.getElementById("clearButton");
         clearButton.onclick = handleClearButton;
+        var switchActiveDie = document.getElementById("dice");
+        switchActiveDie.onclick = handleSwitchDiceButton;
     }
     
     function handleKeyPress (e) {
@@ -321,8 +328,12 @@ function backgammonGame () {
     controller.validatePlayer(col);
     colInput.value = "";
     }
-    function handleSwitchDiceButton () {
-        
+    function handleSwitchDiceButton (event) {
+        var die = event.target;
+        var value = die.cellIndex;
+        if (value != null){
+            alert(value);
+        }
     }
     
     function handleClearButton () {
