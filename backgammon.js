@@ -276,7 +276,11 @@ function backgammonGame () {
         var fireButton = document.getElementById("bgFireButton");
         fireButton.onclick = handleFireButton;
         var guessInput = document.getElementById("guessInput");
-        guessInput.onkeypress = handleKeyPress;        
+        guessInput.onkeypress = handleKeyPress;      
+        var clearButton = document.getElementById("clearButton");
+        clearButton.onclick = handleClearButton;
+        var activeDie = document.getElementById("die0");
+        activeDie.onclick = handleClick;
     }
     
     function handleKeyPress (e) {
@@ -292,6 +296,9 @@ function backgammonGame () {
     var col = colInput.value;
     controller.validatePlayer(col);
     colInput.value = "";
+    }
+    function handleDiceButton () {
+        
     }
     
     function handleClearButton () {
