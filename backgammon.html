@@ -74,7 +74,7 @@
                     <td id="M0"></td><td id="L0"></td><td id="K0"></td><td id="J0"></td><td id="I0"></td><td id="H0">
                 </tr>                
             </table> 
-            <table id = "backgammonTableFour">
+            <table id = "backgammonTableFour" onclick = "">
                 <tr>
                     <td id="G4"></td><td id="F4"></td><td id="E4"></td><td id="D4"></td><td id="C4"></td><td id="B4">
                 </tr>
@@ -99,8 +99,8 @@
             </table>
             <table id = "dice" onclick="">
                 <tr>
-                    <td id = "die0" onclick="">6</td>
-                    <td id = "die1" onclick="activeDie(this)">2</td>
+                    <td id = "die0" >6</td>
+                    <td id = "die1" >2</td>
                 </tr>
             </table>
             <table>
@@ -113,7 +113,7 @@
             <form>
                 <input type="text" id="guessInput" placeholder="Pick a checker to move">
                 <input type="button" id="bgFireButton" value="Black move!" onclick="">
-                <input type="button" id="switchActiveDie" value="Switch dice" onclick="">
+                <input type="button" id="endTurn" value="End Turn" onclick="">
 
             </form>        
         <script src="backgammon.js"></script>

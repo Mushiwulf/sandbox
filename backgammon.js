@@ -30,9 +30,9 @@ function backgammonGame () {
         activeDie: null,
         activeColumn: null,
        clearBoard: function() {
-           $('table td').removeClass("Black");
+            $('table td').removeClass("Black");
             $('table td').removeClass("White");
-           $('table td').addClass("empty");
+            $('table td').addClass("empty");
          /*   for (var i = 0; i < model.allPositions.length; i++) {
                 var index = this.allPositions[i];
                 view.emptyCell(index);
@@ -64,6 +64,8 @@ function backgammonGame () {
             
         },
         advancePlayer: function() {
+            model.activeColumn = null;
+            model.activeDie = null;
             if (model.numberOfMoves === 0) {
                 model.numberOfMoves = 2; //probably not the right place for this.
                 controller.rollDice();
@@ -95,14 +97,14 @@ function backgammonGame () {
             model.activeDie = die;
             var column = model.activeColumn;
             if (column != null) {
-                controller.moveTest2(die, column);
+                controller.moveTest(column, die);
             }
         },
         setActiveColumn: function(column) {
             model.activeColumn = column;
             var die = model.activeDie;
             if (die != null) {
-                controller.moveTest2(die, column);
+                controller.moveTest(column, die);
             }
         },
 
@@ -194,50 +196,20 @@ function backgammonGame () {
             model["bearingOff"+inactivePlayer]--;
         },
         // proof of concept function coming. Remove later
-        moveTest2: function(die, column) { //for mouseevents only. refere to moveTest for current function
-            var player = model.playerTurn;
 
-            var newDirection;
-            var move;
-            var columnColor;
-            if (player === "White") {
-                newDirection = 1;
-            } else {
-                newDirection = -1;
-            }
-            move = newDirection * die;
-            var oldRow = controller.findHighest(column);
-            view.emptyCell(column+oldRow);
-            var newColumn= controller.getNewColumn(column, move);
-            var newColumnCode = newColumn.charCodeAt(0);
-            if (newColumnCode < 90 && newColumnCode > 65) {
-                columnColor = controller.getColumnColor(newColumn);
-                if (columnColor === player || columnColor ==="empty") {
-                    controller.findLowest(newColumn, player);
-                    controller.advancePlayer();
-                } else {
-                    alert("invalid move");
-                    view.fillCell(column+oldRow, player);
-
-                }
-            } else {
-                alert("off the board (not ready for bearing off)");
-                view.fillCell(column+oldRow, player);
-            }            
-        },
         moveTest: function(cell, die) {
             var player = model.playerTurn;
             var inactivePlayer = controller.getInactivePlayer();
             var newDirection;
             var move;
             var column;
-            var roll = model.dice[0];
+            var roll = die;
             var columnColor;
             var jailOccupied = document.getElementById(player + "Cell");
-            
+            /*
             if (model.numberOfMoves === 0) {
                 roll = model.dice[1];
-            }
+            } */
             
             if (player === "White") {
                 newDirection = 1;
@@ -310,10 +282,25 @@ function backgammonGame () {
         guessInput.onkeypress = handleKeyPress;      
         var clearButton = document.getElementById("clearButton");
         clearButton.onclick = handleClearButton;
+      // These need some serious work still
         var switchActiveDie = document.getElementById("dice");
         switchActiveDie.onclick = handleSwitchDiceButton;
+        var getActiveColumn1 = document.getElementById("backgammonTableOne");
+        getActiveColumn1.onclick = handleGetActiveColumn;
+        var getActiveColumn2 = document.getElementById("backgammonTableTwo");
+        getActiveColumn2.onclick = handleGetActiveColumn;
+        var getActiveColumn3 = document.getElementById("backgammonTableThree");
+        getActiveColumn3.onclick = handleGetActiveColumn;
+        var getActiveColumn4 = document.getElementById("backgammonTableFour");
+        getActiveColumn4.onclick = handleGetActiveColumn;
+        var endTurnButton = document.getElementById("endTurn");
+        endTurnButton.onclick = endTurnPress;
+        
     }
-    
+    function endTurnPress () {
+        model.numberOfMoves = 0;
+        controller.advancePlayer();
+    }
     function handleKeyPress (e) {
     var fireButton = document.getElementById("bgFireButton");
     if (e.keyCode === 13) {
@@ -328,22 +315,22 @@ function backgammonGame () {
     controller.validatePlayer(col);
     colInput.value = "";
     }
+    function handleGetActiveColumn (event) {
+        var data = event.target;
+        var cell = data.id;
+        var column = cell.charAt(0);
+        controller.setActiveColumn(column);
+    }
     function handleSwitchDiceButton (event) {
-        var die = event.target;
-        var value = die.cellIndex;
-        if (value != null){
-            alert(value);
-        }
+        var data = event.target;
+        var value = data.cellIndex;
+        var die = model.dice[value];
+        controller.setActiveDie(die);
     }
     
     function handleClearButton () {
         var clearButton = document.getElementById("clearButton");
         clearButton.onclick = model.clearBoard();
-    }
-    function handleClick (e) {
-        var dieClick = document.getElementById("die0");
-        var roll = dieClick.innerHTML;
-        controller.activeDie(roll);
     }
     function handleRollDieButton() {
         
