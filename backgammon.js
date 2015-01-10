@@ -97,14 +97,16 @@ function backgammonGame () {
             model.activeDie = die;
             var column = model.activeColumn;
             if (column != null) {
-                controller.moveTest(column, die);
+            //    controller.moveTest(column, die);
+                controller.validatePlayer(column, die);
             }
         },
         setActiveColumn: function(column) {
             model.activeColumn = column;
             var die = model.activeDie;
             if (die != null) {
-                controller.moveTest(column, die);
+            //    controller.moveTest(column, die);
+                controller.validatePlayer(column, die);
             }
         },
 
@@ -263,7 +265,7 @@ function backgammonGame () {
                 }
             } else {
                 var bearingOffLegal = "bearingOff"+player;
-                if (bearingOffLegal == 15) {
+                if (bearingOffLegal >= 15) {
                     alert("you may bear off"); //need some bearing off code here
                 }
 
