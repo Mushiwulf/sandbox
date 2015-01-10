@@ -75,7 +75,7 @@ function backgammonGame () {
             model.activeDie = null;
             if (model.numberOfMoves === 0) {
                 model.numberOfMoves = 2; //probably not the right place for this.
-                controller.rollDice(0);
+                controller.rollDice();
                 if (model.dice[0] === model.dice[1]) {
                     model.numberOfMoves = 4;
                 }
@@ -127,10 +127,10 @@ function backgammonGame () {
             // loop through the dice array and grab two random numbers. Send to view.
             var dice = model.dice;
             if (first) {
-                var die0 = document.getElementById("die"+"0");
+                var die0 = document.getElementById("die0");
                 die0.setAttribute("class", "BlackDie");
-                var die1 = document.getElementById("die"+"1");
-                die1.setAttribute("class", "WhiteDie");    
+                var die1 = document.getElementById("die1");
+                die1.setAttribute("class", "WhiteDie");
             }
             for (var i = 0; i < dice.length; i++ ) {
                 dice[i] = Math.floor(Math.random()*6)+1;
