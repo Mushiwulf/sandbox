@@ -34,6 +34,8 @@ function backgammonGame () {
         numberOfMoves: 1,
         bearingOffBlack: 5,
         bearingOffWhite: 5,
+        offBoardBlack: 0,
+        offBoardWhite: 0,
         activeDie: null,
         activeColumn: null,
        clearBoard: function() {
@@ -126,22 +128,6 @@ function backgammonGame () {
         rollDice: function(first) {
             // loop through the dice array and grab two random numbers. Send to view.
             var dice = model.dice;
-/*            if (first) {
-                var die0 = document.getElementById("die0");
-                die0.setAttribute("class", "BlackDie");
-                var die1 = document.getElementById("die1");
-                die1.setAttribute("class", "WhiteDie");
-                var label = document.getElementById("bgFireButton");
-                if (dice[0] > dice[1]) {
-                //black player starts
-                label.setAttribute("value", "Black move!");
-                model.playerTurn = "Black";
-                } else {
-                //white player starts
-                label.setAttribute("value", "White move!");
-                model.playerTurn = "White";
-                }
-            } */
             for (var i = 0; i < dice.length; i++ ) {
                 dice[i] = Math.floor(Math.random()*6)+1;
                 view.showDice(dice[i], i);
@@ -152,7 +138,7 @@ function backgammonGame () {
                     die1.setAttribute("class", "WhiteDie");
                     var label = document.getElementById("bgFireButton");
                     if (dice[0] === dice [1]) {
-                        controller.rollDice (1);                        
+                        controller.rollDice (true);                        
                     } else if (dice[0] > dice[1]) {
                         //black player starts
                         label.setAttribute("value", "Black move!");
@@ -163,9 +149,7 @@ function backgammonGame () {
                         model.playerTurn = "White";
                     }
                 }
-
             }
-
         },
         getNewColumn: function(column, move) {
             var newColumn = String.fromCharCode(column.charCodeAt(0) + move);
@@ -253,6 +237,7 @@ function backgammonGame () {
             var roll = die;
             var columnColor;
             var jailOccupied = document.getElementById(player + "Cell");
+            var fromJail = false;
             /*
             if (model.numberOfMoves === 0) {
                 roll = model.dice[1];
@@ -265,6 +250,7 @@ function backgammonGame () {
             }
             move = newDirection * roll;
             if (jailOccupied.innerHTML > 0) {
+                fromJail = true;
                 if (player === "Black") {
                     column = "Z";
                 } else {
@@ -306,16 +292,25 @@ function backgammonGame () {
                     } else {                                       // if not empty, occupied by player, or capturable, it is not a valid move
                         alert("invalid move");
                         view.fillCell(column+oldRow, player);
+                        if (fromJail) {
+                            jail.innerHTML = Number(jail.innerHTML)+1; //attempt to reincrement jail. not working
+                        }
                     }
                 }
             } else {
-                var bearingOffLegal = "bearingOff"+player;
-                if (bearingOffLegal >= 15) {
-                    alert("you may bear off"); //need some bearing off code here
+                var bearingOffLegal; 
+                if (player==="Black") {
+                    bearingOffLegal = model.bearinggOffBlack;
+                } else {
+                    bearingOffLegal = model.bearingOffWhite;
                 }
+                if (bearingOffLegal >= 15) {
+                    alert("you may bear off"); //need some bearing off code here. Mostly just increment offBoard+"player"
+                } else {
 
                 alert("off the board (not ready for bearing off)");
                 view.fillCell(column+oldRow, player);
+                }
             }
         }
         
