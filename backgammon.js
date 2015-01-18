@@ -39,9 +39,9 @@ function backgammonGame () {
         activeDie: null,
         activeColumn: null,
        clearBoard: function() {
-            $('table td').removeClass("Black");
-            $('table td').removeClass("White");
-            $('table td').addClass("empty");
+            $('table td').removeClass("Black")
+                         .removeClass("White")
+                         .addClass("empty");
          /*   for (var i = 0; i < model.allPositions.length; i++) {
                 var index = this.allPositions[i];
                 view.emptyCell(index);
@@ -300,7 +300,7 @@ function backgammonGame () {
             } else {
                 var bearingOffLegal; 
                 if (player==="Black") {
-                    bearingOffLegal = model.bearinggOffBlack;
+                    bearingOffLegal = model.bearingOffBlack;
                 } else {
                     bearingOffLegal = model.bearingOffWhite;
                 }
