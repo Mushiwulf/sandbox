@@ -42,10 +42,6 @@ function backgammonGame () {
             $('table td').removeClass("Black")
                          .removeClass("White")
                          .addClass("empty");
-         /*   for (var i = 0; i < model.allPositions.length; i++) {
-                var index = this.allPositions[i];
-                view.emptyCell(index);
-            } */
         }, 
         setupBoard: function() {
             var index;
