@@ -148,8 +148,7 @@ function backgammonGame () {
             }
         },
         getNewColumn: function(column, move) {
-            var newColumn = String.fromCharCode(column.charCodeAt(0) + move);
-            return newColumn;
+            return String.fromCharCode(column.charCodeAt(0) + move);
         },
        
         findLowest: function (column, player) {
@@ -184,19 +183,16 @@ function backgammonGame () {
             } return 0;
         },
         getColumnOnly: function(cell) {
-            var column = cell.charAt(0).toUpperCase();
-            return column;
+            return cell.charAt(0).toUpperCase();
         },
         getColumnColor: function(cell) {
             var column = controller.getColumnOnly(cell);
             var row = controller.findHighest(column);
             var index = column + row;
-            var color = document.getElementById(index).className;
-            return color;
+            return document.getElementById(index).className;
         },
         getCapturable: function(cell) {
-            var cellClass = document.getElementById(cell).className;
-            return cellClass;
+            return document.getElementById(cell).className;
         },
         validatePlayer: function(cell, die) {
             var player = model.playerTurn;
@@ -301,7 +297,15 @@ function backgammonGame () {
                     bearingOffLegal = model.bearingOffWhite;
                 }
                 if (bearingOffLegal >= 15) {
-                    alert("you may bear off"); //need some bearing off code here. Mostly just increment offBoard+"player"
+                    //alert("you may bear off");
+                    //increment home
+                    var playerHome = document.getElementById(player + "Home");
+                    playerHome.innerHTML = Number(playerHome.innerHTML)+1;
+                    if (Number(playerHome.innerHTML) === 15) {
+                        alert (player+" Wins!");
+                    }
+                    //check home for ===15, declare winner
+                    controller.advancePlayer();
                 } else {
 
                 alert("off the board (not ready for bearing off)");
