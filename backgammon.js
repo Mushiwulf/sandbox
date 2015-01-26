@@ -62,12 +62,7 @@ function backgammonGame () {
            I've also considered doing move validation up front and only making valid columns clickable. But first I think I need to write the function to just move a checker */
 
         
-        setStartingPlayer: function() {
-            /* Roll the dice, high roll starts. */
-            var playerWhite = Math.floor(Math.random()*6)+1;
-            var playerBlack = Math.floor(Math.random()*6)+1;
-            
-        },
+
         advancePlayer: function() {
             model.activeColumn = null;
             model.activeDie = null;
@@ -93,11 +88,7 @@ function backgammonGame () {
             }
             model.numberOfMoves--;
         },
-        activeDie: function(id) {
-             var die = document.getElementById(id);
-             model.activeDie = die.innerHTML;
-             die.setAttribute("class", "active")
-        },
+
         setActiveDie: function(die) {
             //this should take the active die and indicate that somehow and then the player needs to select a column.
             //Alternately, they will have selected a column first and then this will fire the move function passing the column and the die.
@@ -119,7 +110,7 @@ function backgammonGame () {
 
 
 
-            /* there is a lot of half baked stuff here that I ened to refine, but I wanted to get my general idea down */
+            /* there is a lot of half baked stuff here that I need to refine, but I wanted to get my general idea down */
 
         rollDice: function(first) {
             // loop through the dice array and grab two random numbers. Send to view.
@@ -301,7 +292,7 @@ function backgammonGame () {
                     //increment home
                     var playerHome = document.getElementById(player + "Home");
                     playerHome.innerHTML = Number(playerHome.innerHTML)+1;
-                    if (Number(playerHome.innerHTML) === 15) {
+                    if (Number(playerHome.innerHTML) >= 15) {
                         alert (player+" Wins!");
                     }
                     //check home for ===15, declare winner
