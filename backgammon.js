@@ -370,3 +370,6 @@ function backgammonGame () {
     }
     init();
 }
+$(function(){
+    $("#reset").click(function(){backgammonGame();});
+});
